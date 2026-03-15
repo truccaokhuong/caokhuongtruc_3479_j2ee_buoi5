@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{_layout}">
+<head>
+    <title>Products</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Products</h2>
+        <a th:href="@{/products/add}" class="btn btn-primary">Create New Product</a>
+    </div>
+
+    <table class="table table-striped align-middle">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Image</th>
+            <th scope="col">Price</th>
+            <th scope="col">Category Name</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${#lists.isEmpty(products)}">
+            <td colspan="6" class="text-center text-muted">No products found.</td>
+        </tr>
+        <tr th:each="product,iter : ${products}">
+            <th scope="row" th:text="${iter.count}">1</th>
+            <td th:text="${product.name}">Name</td>
+            <td>
+                <img th:if="${product.image != null and !#strings.isEmpty(product.image)}"
+                     th:src="${product.image}"
+                     alt="Product image"
+                     style="height:120px;width:150px;object-fit:cover;">
+                <span th:if="${product.image == null or #strings.isEmpty(product.image)}" class="text-muted">N/A</span>
+            </td>
+            <td th:text="${product.price}">0</td>
+            <td th:text="${product.category != null ? product.category.name : 'N/A'}">Category</td>
+            <td>
+                <a th:href="@{/products/edit/{id}(id=${product.id})}" class="btn btn-secondary btn-sm">Edit</a>
+                <form th:action="@{/products/delete/{id}(id=${product.id})}" method="post" class="d-inline">
+                    <button type="submit"
+                            class="btn btn-danger btn-sm"
+                            onclick="return confirm('Delete this product?');">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

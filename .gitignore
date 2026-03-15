@@ -1,0 +1,21 @@
+# Maven build output
+target/
+
+# Java compiled artifacts
+*.class
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# OS artifacts
+.DS_Store
+
+# Local tooling/data folders
+.mysql/
+.mysql-data/
+.tools/
+
+# Logs
+*.log
